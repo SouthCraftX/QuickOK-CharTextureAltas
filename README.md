@@ -1,1 +1,1 @@
-# QuickOK-AltasPack
+# QuickOK-CharTextureAltas
