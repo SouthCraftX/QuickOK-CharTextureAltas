@@ -1,0 +1,87 @@
+#pragma once
+#include "attribute.h"
+#include "internal/gnuc_spec/types.h"
+#include "qozero.h"
+#include "types.h"
+
+struct _QORP_Rect
+{
+    qo_uint32_t  x;
+    qo_uint32_t  y;
+    qo_uint32_t  width;
+    qo_uint32_t  height;
+    qo_bool_t    placed;
+};
+typedef struct _QORP_Rect QORP_Rect;
+
+typedef enum
+{
+    QORP_SORT_BY_HEIGHT ,
+    QORP_SORT_BY_AREA ,
+    QORP_SORT_BY_WIDTH ,
+    QORP_SORT_BY_PERIMETER ,
+    QORP_SORT_BY_MAX_DIMENSION ,
+    QORP_SORT_BY_HERUISTIC ,
+    QORP_SORT_BY_NONE
+} QORP_RectSortMethod;
+
+typedef enum
+{
+    QO_CHAR_ALTAS_SKYLINE ,
+    QO_CHAR_ALTAS_MAX_RECT ,
+    QO_CHAR_ALTAS_HYBRID_SHELF
+} QO_CharAltasAlgorithm;
+
+#define QO_ALTAS_CLASS(method)          QO_CharTexturePacker_ ## method
+#define QO_ALTAS_CLASS_INTERAL(method)  _QO_CharTexturePacker_ ## method
+
+struct _SkylineSegment
+{
+    qo_uint32_t  x;
+    qo_uint32_t  y;
+    qo_uint32_t  width;
+};
+typedef struct _QO_SkylineSegment QO_SkylineSegment;
+
+struct QO_ALTAS_CLASS_INTERAL(Skyline)
+{
+    qo_uint32_t  width;
+    qo_uint32_t  height;
+    QO_SkylineSegment * segments;
+    qo_uint32_t  count;
+    qo_uint32_t  capacity;
+};
+typedef struct QO_ALTAS_CLASS_INTERAL (Skyline) QO_ALTAS_CLASS(Skyline);
+
+struct QO_ALTAS_CLASS_INTERAL(MaxRect)
+{
+    qo_uint32_t  width;
+    qo_uint32_t  height;
+    QORP_Rect *  free_rects;
+    qo_uint32_t  free_rect_count;
+    qo_uint32_t  max_free_rect_count;
+};
+typedef struct QO_ALTAS_CLASS_INTERAL (MaxRect) QO_ALTAS_CLASS(MaxRect);
+
+union _QO_CharTexturePacker
+{
+    QO_ALTAS_CLASS(Skyline) skyline;
+    QO_ALTAS_CLASS(MaxRect) max_rect;
+};
+typedef union _QO_CharTexturePacker QO_CharTexturePacker;
+
+struct _QO_CharRectPlacement;
+qo_stat_t
+qo_char_texture_packer_init(
+    QO_CharTexturePacker * packer ,
+    qo_uint32_t            width ,
+    qo_uint32_t            height ,
+    QO_CharAltasAlgorithm  algorithm
+) QO_NONNULL(1);
+qo_bool_t
+qo_char_texture_packer_place_rects(
+    QO_CharTexturePacker * packer ,
+    QORP_Rect *            rects ,
+    qo_uint32_t            count ,
+    QORP_RectSortMethod    sort_method
+) QO_NONNULL(1 , 2);

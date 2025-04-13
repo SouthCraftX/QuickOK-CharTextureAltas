@@ -30,3 +30,26 @@
 *.exe
 *.out
 *.app
+
+# Ninja
+.ninja*
+
+# CMake
+CMakeCache.txt
+CMakeFiles
+cmake_install.cmake
+CTestTestfile.cmake
+CPackConfig.cmake
+CPackSourceConfig.cmake
+CMakeLists.txt.user
+Makefile
+
+# Exported compile_commands from clang
+compile_commands.json
+
+# IDE
+.vscode/*
+
+# Cache
+.cahce/*
+.cache/clangd/index/
