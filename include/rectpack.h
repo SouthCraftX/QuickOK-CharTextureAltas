@@ -1,6 +1,4 @@
 #pragma once
-#include "attribute.h"
-#include "internal/gnuc_spec/types.h"
 #include "qozero.h"
 #include "types.h"
 
@@ -8,8 +6,8 @@ struct _QORP_Rect
 {
     qo_uint32_t  x;
     qo_uint32_t  y;
-    qo_uint32_t  width;
-    qo_uint32_t  height;
+    qo_uint32_t  w;
+    qo_uint32_t  h;
     qo_bool_t    placed;
 };
 typedef struct _QORP_Rect QORP_Rect;
@@ -29,7 +27,6 @@ typedef enum
     QORP_SORT_BY_WIDTH ,
     QORP_SORT_BY_PERIMETER ,
     QORP_SORT_BY_MAX_DIMENSION ,
-    QORP_SORT_BY_HERUISTIC ,
     QORP_SORT_BY_NONE
 } QORP_RectSortMethod;
 
@@ -39,6 +36,15 @@ typedef enum
     QO_CHAR_ALTAS_MAX_RECT ,
     QO_CHAR_ALTAS_HYBRID_SHELF
 } QORP_RectPackAlgorithm;
+
+typedef enum 
+{
+    QORP_SBA ,
+    QORP_BLS ,
+    QORP_BAF ,
+    QORP_HERUISTIC ,
+    QORP_HISTRICAL_HEURISTIC
+} QORP_RectPackStragy;
 
 typedef enum
 {
@@ -100,6 +106,6 @@ qorp_pack_rect(
 ) QO_NONNULL(1 , 2);
 
 qo_fp32_t
-qorp_get_utilization_rate(
+qorp_calculate_utilization(
     QORP_RectPacker * packer
 ) QO_NONNULL(1);

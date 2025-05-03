@@ -7,10 +7,10 @@
 
 struct __FreeRect
 {
-    qo_uint32_t  x;
-    qo_uint32_t  y;
-    qo_uint32_t  w;
-    qo_uint32_t  h;
+    qo_int32_t  x;
+    qo_int32_t  y;
+    qo_int32_t  w;
+    qo_int32_t  h;
 };
 typedef struct __FreeRect _FreeRect;
 
@@ -30,8 +30,6 @@ typedef struct __PlacementHistory _PlacementHistory;
 
 struct __Maxrect
 {
-    qo_ref_count_t  reference_count;
-
     qo_uint32_t  width;
     qo_uint32_t  height;
     qo_uint32_t  placed_rect_count;
@@ -100,9 +98,12 @@ typedef
         qo_uint32_t  count
     );
 
-#define PLACE_RECT_FN(policy) \
-    qo_uint32_t \
-    place_rects_##policy( \
+#define PLACE_RECT_FN_NAME(policy) \
+    place_rect_##policy
+
+#define PLACE_RECT_FN_DECL(policy) \
+    qo_bool_t \
+    place_rect_##policy( \
         _Maxrect *  maxrect , \
         QORP_Rect *  rect  \
     )
@@ -114,3 +115,34 @@ typedef
         QORP_Rect *  rects , \
         qo_uint32_t  count \
     )
+
+// Sorting
+void
+sort_rects_by_area(
+    QORP_Rect * rects ,
+    qo_int32_t  count
+) QO_NONNULL(1);
+
+void
+sort_rects_by_height(
+    QORP_Rect * rects ,
+    qo_int32_t  count
+) QO_NONNULL(1);
+
+void
+sort_rects_by_width(
+    QORP_Rect * rects ,
+    qo_int32_t  count   
+) QO_NONNULL(1);
+
+void
+sort_rects_by_perimeter(
+    QORP_Rect * rects ,
+    qo_int32_t  count
+) QO_NONNULL(1);
+
+void
+sort_rects_by_hybrid(
+    QORP_Rect * rects ,
+    qo_int32_t  count
+) QO_NONNULL(1);

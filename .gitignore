@@ -53,3 +53,5 @@ compile_commands.json
 # Cache
 .cahce/*
 .cache/clangd/index/
+
+build/*

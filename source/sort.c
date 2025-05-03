@@ -1,4 +1,4 @@
-#include "internal/gnuc_spec/types.h"
+#include "qozero.h"
 #include "maxrect.h"
 
 #include <math.h>
@@ -82,11 +82,11 @@ heap_sort_by_area(
 }
 
 // 分区函数 - 按面积
-int
+qo_int32_t
 partition_by_area(
     QORP_Rect * rects ,
-    int           low ,
-    int           high
+    qo_int32_t  low ,
+    qo_int32_t  high
 ) {
     // 选择最右边的元素作为基准
     int pivot_area = rects[high].width * rects[high].height;
@@ -114,9 +114,9 @@ partition_by_area(
 void
 intro_sort_util_by_area(
     QORP_Rect * rects ,
-    int           low ,
-    int           high ,
-    int           depth_limit
+    qo_int32_t  low ,
+    qo_int32_t  high ,
+    qo_int32_t  depth_limit
 ) {
     // 如果数组大小小于等于16，使用插入排序
     if (high - low <= 16)
@@ -148,9 +148,9 @@ intro_sort_util_by_area(
 
 // 主Introsort函数 - 按面积
 void
-sort_rectangles_by_area(
+sort_rects_by_area(
     QORP_Rect * rects ,
-    qo_uint32_t   rect_count
+    qo_int32_t   rect_count
 ) {
     if (rect_count <= 1)
     {
@@ -304,9 +304,9 @@ intro_sort_util_by_height(
 
 // 主Introsort函数 - 按高度
 void
-sort_rectangles_by_height(
+sort_rects_by_height(
     QORP_Rect * rects ,
-    qo_uint32_t   rect_count
+    qo_int32_t   rect_count
 ) {
     if (rect_count <= 1)
     {
@@ -455,9 +455,9 @@ intro_sort_util_by_width(
 
 // 主Introsort函数 - 按宽度
 void
-sort_rectangles_by_width(
+sort_rects_by_width(
     QORP_Rect * rects ,
-    qo_uint32_t   rect_count
+    qo_int32_t   rect_count
 ) {
     if (rect_count <= 1)
     {
@@ -606,9 +606,9 @@ intro_sort_util_by_perimeter(
 
 // 主Introsort函数 - 按周长
 void
-sort_rectangles_by_perimeter(
+sort_rects_by_perimeter(
     QORP_Rect * rects ,
-    qo_uint32_t   rect_count
+    qo_int32_t   rect_count
 ) {
     if (rect_count <= 1)
     {
@@ -767,9 +767,9 @@ intro_sort_util_by_hybrid(
 
 // 主Introsort函数 - 按混合评分
 void
-sort_rectangles_by_hybrid(
+sort_rects_by_hybrid(
     QORP_Rect * rects ,
-    qo_uint32_t   rect_count
+    qo_int32_t   rect_count
 ) {
     if (rect_count <= 1)
     {
@@ -789,7 +789,7 @@ dynamic_sort_with_history(
     QORP_Rect *       rects ,
     int                 start_index ,
     int                 rect_count ,
-    Container *         container ,
+    _Maxrect *         container ,
     _PlacementHistory * history
 ) {
 
